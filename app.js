@@ -5,12 +5,10 @@ var config = require('config');
 var log = require('./libs/log')(module);
 var mongoose = require('./libs/mongoose');
 var HttpError = require('./error').HttpError;
-var exphbs = require('express3-handlebars');
 
 var app = express();
 
-app.engine('handlebars', exphbs({defaultLayout: 'page'}));
-app.set('view engine', 'handlebars');
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.favicon());
@@ -33,6 +31,7 @@ app.use(express.session( {
 	store: require('./libs/sessionStore')
 }));
 
+app.use(require('./middleware/resRenderWithData'));//render view with some data
 app.use(require('./middleware/sendHttpError'));
 app.use(require('./middleware/loadUser'));
 
@@ -41,7 +40,7 @@ app.use(app.router);
 require('./routes')(app);
 
 //client-code
-app.use(express.static(path.join(__dirname, 'assets')));
+app.use(express.static(path.join(__dirname, 'builds')));
 
 //404
 app.use(function(req, res) {

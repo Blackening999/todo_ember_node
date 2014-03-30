@@ -1,0 +1,21 @@
+exports.get = function(req, res) {
+	res.send(posts);
+};
+
+var posts = JSON.stringify({
+	"posts": [{
+		"id": 1,
+		"title": "a title",
+		"body": "a body"
+	},
+		{
+			"id": 2,
+			"title": "another title",
+			"body": "another body"
+		},
+		{
+			"id": 3,
+			"title": "a third title",
+			"body": "a third body"
+		}]
+});

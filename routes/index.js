@@ -5,7 +5,18 @@
 //var checkAuth = require('middleware/checkAuth');
 
 module.exports = function(app) {
+
 	app.get('/', require('./main').get);
+
+	app.get('/todos', require('./todos').get);
+
+	app.post('/todos', require('./todos').post);
+
+//	app.get('/products', require('./posts').get);
+
+//	app.get('/products', function() {
+//		res.send({name: "flint2", price: 234});
+//	})
 
 //	app.get('/login', require('./login').get);
 //	app.post('/login', require('./login').post);

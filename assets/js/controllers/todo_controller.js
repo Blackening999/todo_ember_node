@@ -1,0 +1,33 @@
+Todos.TodoController = Ember.ObjectController.extend({
+	isEditing: false,
+	isCompleted: function(key, value) {
+		var model = this.get('model');
+		//setter
+		if (arguments.length > 1) {
+			model.set('isCompleted', value);
+			model.save();
+			return value;
+		}
+		//getter
+		return model.get('isCompleted');
+	}.property('model.isCompleted'),
+	actions: {
+		editTodo: function() {
+			this.set('isEditing', true);
+		},
+		removeTodo: function() {
+			var todo = this.get('model');
+			todo.deleteRecord();
+			todo.save();
+		},
+		acceptChanges: function() {
+			this.set('isEditing', false);
+
+			if (Ember.isEmpty(this.get('model.title'))) {
+				this.send('removeTodo');
+			} else {
+				this.get('model').save();
+			}
+		}
+	}
+});
