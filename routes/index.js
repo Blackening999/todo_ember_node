@@ -12,37 +12,7 @@ module.exports = function(app) {
 
 	app.post('/todos', require('./todos').post);
 
-//	app.get('/products', require('./posts').get);
+	app.put('/todos/:id', require('./todos').put);
 
-//	app.get('/products', function() {
-//		res.send({name: "flint2", price: 234});
-//	})
-
-//	app.get('/login', require('./login').get);
-//	app.post('/login', require('./login').post);
-//	app.post('/logout', require('./logout').post);
-//
-//	app.get('/chat', checkAuth, require('./chat').get);
-//	app.get('/users', function(req, res, next) {
-//		User.find({}, function(err, users) {
-//			if (err) return next(err);
-//			res.json(users);
-//		})
-//	});
-//
-//	app.get('/user/:id', function(req, res, next) {
-//		try {
-//			var id = new ObjectID(req.params.id);
-//		} catch(e) {
-//			return next(404);
-//		}
-//
-//		User.findById(id, function(err, user) {
-//			if (err) return next(err);
-//			if (!user) {
-//				next(404);
-//			}
-//			res.json(user);
-//		})
-//	});
+	app.del('/todos/:id', require('./todos').del);
 }
