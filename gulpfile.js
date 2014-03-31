@@ -1,6 +1,7 @@
 var gulp       = require('gulp');
 var browserify = require('gulp-browserify');
-var handlebars = require('gulp-ember-handlebars');
+var handlebars = require('gulp-handlebars');
+var defineModule = require('gulp-define-module');
 var myth       = require('gulp-myth');
 var hint       = require('gulp-jshint');
 var concat     = require('gulp-concat');
@@ -108,16 +109,10 @@ gulp.task('scripts', ['hint', 'templates', 'concat'], function () {
 		.pipe(gulp.dest('builds/js'));
 });
 
-gulp.task('templates', function () {
-	return gulp.src('assets/**/*.hbs')
-		.pipe(cache(handlebars({
-			outputType: 'cjs',
-			templateRoot: 'assets/templates/',
-			processName: function (name) {
-				name = name.split('/').slice(1).join('/').replace(/\.hbs/, '');
-				return name;
-			}
-		})))
+gulp.task('templates', function(){
+	gulp.src(['assets/templates/*.hbs'])
+		.pipe(handlebars())
+		.pipe(defineModule('node'))
 		.pipe(concat('templates.js'))
 		.pipe(gulp.dest('builds'));
 });
